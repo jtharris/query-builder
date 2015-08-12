@@ -8,7 +8,10 @@ class QueryBuilder:
         self.where_value = None
 
     def select(self, column):
-        self.column = column
+        if isinstance(column, list):
+            self.column = ', '.join(column)
+        else:
+            self.column = column
         return self
 
     def from_table(self, table):

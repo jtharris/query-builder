@@ -18,11 +18,17 @@ class QueryBuilderTest(unittest.TestCase):
         sql = self.builder.generate_sql()
         self.assertEqual('SELECT * FROM account;', sql)
 
-    def test_column_defaults_to_start(self):
+    def test_column_defaults_to_star(self):
         self.builder.from_table('account')
 
         sql = self.builder.generate_sql()
         self.assertEqual('SELECT * FROM account;', sql)
+
+    def test_column_can_take_list(self):
+        self.builder.select(['col1', 'col2']).from_table('account')
+
+        sql = self.builder.generate_sql()
+        self.assertEqual('SELECT col1, col2 FROM account;', sql)
 
     def test_select_with_where_clause(self):
         self.builder.select('account_name').from_table('account').where('account_id', 13977)
